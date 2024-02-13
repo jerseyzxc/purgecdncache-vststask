@@ -1,0 +1,65 @@
+{
+    "manifestVersion": 1,
+    "id": "IgorUdovchenko-PurgeAzureCDN",
+    "name": "Purge Azure CDN",
+    "version": "2.1.0",
+    "publisher": "IgorUdovchenko",
+    "public": true,
+    "targets": [
+      {
+        "id": "Microsoft.VisualStudio.Services"
+      }
+    ],
+    "description": "This task allows you to purge content of an Azure CDN within a pipeline.",
+    "categories": [
+      "Azure Pipelines"
+    ],
+    "tags": [
+      "release",
+      "azure",
+      "cdn",
+      "purge"
+    ],
+    "content": {
+      "details": {
+        "path": "README.md"
+      },
+      "license": {
+        "path": "LICENSE"
+      }
+    },
+    "links": {
+      "getstarted": {
+        "uri": "https://github.com/jerseyzxc/purgecdncache-vststask"
+      },
+      "support": {
+        "uri": "https://github.com/jerseyzxc/purgecdncache-vststask"
+      }
+    },
+    "branding": {
+      "color": "rgb(36, 43, 50)",
+      "theme": "dark"
+    },
+    "icons": {
+      "default": "logo.png"
+    },
+    "files": [
+      {
+        "path": "PurgeAzureCDN"
+      }
+    ],
+  
+    "contributions": [
+      {
+        "id": "PurgeAzureCDN",
+        "type": "ms.vss-distributed-task.task",
+        "targets": [
+          "ms.vss-distributed-task.tasks"
+        ],
+        "properties": {
+          "name": "PurgeAzureCDN"
+        }
+      }
+    ]
+  }
+  

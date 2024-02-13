@@ -1,0 +1,102 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "98e4cc25-84e5-4b3f-bd89-43cda915399b",
+    "name": "AzureCDNPurgeContent",
+    "friendlyName": "Azure CDN Purge Content",
+    "description": "This task allows you to purge content of an Azure CDN within a pipeline.",
+    "helpMarkDown": "",
+    "category": "Azure Pipelines",
+    "author": "Igor Udovchenko",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "demands": [
+        "azureps"
+    ],
+    "minimumAgentVersion": "1.95.0",
+    "runsOn": [
+        "Agent"
+    ],
+    "instanceNameFormat": "Purge CDN $(EndpointName)",
+    "inputs": [
+        {
+            "name": "ConnectedServiceNameSelector",
+            "type": "pickList",
+            "label": "Azure Connection Type",
+            "required": false,
+            "helpMarkDown": "",
+            "defaultValue": "ConnectedServiceName",
+            "options": {
+                "ConnectedServiceName": "Azure Classic",
+                "ConnectedServiceNameARM": "Azure Resource Manager"
+            }
+        },
+        {
+            "name": "ConnectedServiceName",
+            "type": "connectedService:Azure",
+            "label": "Azure Classic Subscription",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Azure Classic subscription to configure before running PowerShell",
+            "visibleRule": "ConnectedServiceNameSelector = ConnectedServiceName"
+        },
+        {
+            "name": "ConnectedServiceNameARM",
+            "type": "connectedService:AzureRM",
+            "label": "Azure Subscription",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Azure Resource Manager subscription to configure before running PowerShell",
+            "visibleRule": "ConnectedServiceNameSelector = ConnectedServiceNameARM"
+        },
+        {
+            "name": "ResourceGroupName",
+            "type": "pickList",
+            "label": "Resource group",
+            "defaultValue": "",
+            "required": true,
+            "properties": {
+                "EditableOptions": "True"
+            },
+            "helpMarkDown": "Select the Azure Resource group that contains the Azure CDN Endpoint to purge."
+        },
+        {
+            "name": "EndpointName",
+            "type": "string",
+            "label": "Endpoint Name",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Specifies name of the CDN endpoint."
+        },
+        {
+            "name": "ProfileName",
+            "type": "string",
+            "label": "Profile Name",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Specifies the name of the profile to which the endpoint belongs."
+        },
+        {
+            "name": "PurgeContent",
+            "type": "multiLine",
+            "label": "Purge Content",
+            "defaultValue": "/*",
+            "required": true,
+            "helpMarkDown": "Specifies the path for the content on the origin server to purge. You may enter one path per line."
+        }
+    ],
+    "dataSourceBindings": [
+        {
+            "target": "ResourceGroupName",
+            "endpointId": "$(ConnectedServiceNameARM)",
+            "dataSourceName": "AzureResourceGroups"
+        }
+    ],
+    "execution": {
+        "PowerShell3": {
+            "target": "Purge-AzureCDN.ps1"
+        }
+    }
+    }
